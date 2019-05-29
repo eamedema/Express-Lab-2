@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="shopApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title> Express & Node </title>
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+
+    <header>
+        <nav class="head-nav">
+                <h1 class="head-h1">EXPRESS & NODE</h1>
+            <ul class="head-ul">
+                
+                <li><a href="#!/home">Home</a></li>
+                <li><a href="#!/shop">Shop</a></li>
+                <li><a href="#!/cart-list">Cart List</a></li>
+                <li><a href="#!/login">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main id="main" ng-view>
+
+    </main>
+
+  
+
+        <script src="https://code.angularjs.org/1.7.8/angular.js"></script>
+        <script src="https://code.angularjs.org/1.7.8/angular-route.js"></script>
+        <script src="app.module.js"></script>
+        
+        <script src="app.config.js"></script>
+
+        <script src="components/cart-list/cartList.js"></script>
+        <script src="components/home/home.js"></script>
+        <script src="components/login/login.js"></script>
+        <script src="components/shop/shop.js"></script>
+        
+        <script src="cart.service.js"></script>
+        <script src="cartItems.js"></script>
+        <script src="server.js"></script>
+       
+    </body>
+</html>
