@@ -1,4 +1,10 @@
 function ShopController($scope, CartService) {
+    // var ctrl = this;
+    // $scope.processForm = function() {
+    //     // execute something
+    //     $scope.showTheForm = false;
+    // }
+
 
     $scope.addItem = () => {
         $scope.items.push({
@@ -44,8 +50,7 @@ function ShopController($scope, CartService) {
                 <input class="input-item" type="text" placeholder="Product" ng-model="newItem.product"/>
                 <input class="input-item" type="number" placeholder="Price" ng-model="newItem.price"/>
                 <input class="input-item" type="number" placeholder="Quantity" ng-model="newItem.quantity"/>
-
-
+                
                 <br>
                 <br>
 
