@@ -33,15 +33,13 @@ function CartService($http, $q) {
         return $q( (resolve, reject) => {
 
         function getSuccess (res) { 
-            return res.rows
+            return res.data;
           }
 
         $http.get('/cart-items')
             .then( (response) => {
-                // service.items = {};
-                // service.cartList = data;
                 console.log(response);
-            return getSuccess(response);
+            resolve(getSuccess(response));
             }); 
         });
 

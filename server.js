@@ -44,6 +44,14 @@ app.get("/cart-items", (req, res) => {
     })
   });
 
+app.delete('/cart-items/:id', (req, res) => {
+    pool.query("DELETE FROM shoppingcart WHERE id = $1::int", [req.params.id])
+    .then( () => {
+        res.status(202);
+        res.send("Successfully deleted item");
+    })
+});
+
 app.listen(4000, () => {
     console.log("JSON Server is running on 4000"); // localhost:4000/shoppingcart
 });

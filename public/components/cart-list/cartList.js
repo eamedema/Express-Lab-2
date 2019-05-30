@@ -10,12 +10,12 @@ function CartListController(CartService) {
       ctrl.cartList = data;
     })
 
-    ctrl.removeItem = (item) => {
-      let i = ctrl.items.indexOf(item);
-          ctrl.items.splice(removedItem, 1);
-          ctrl.cartList.splice(i, 1);
-          console.log("working");
-  }
+  //   ctrl.removeItem = (item) => {
+  //     let i = ctrl.items.indexOf(item);
+  //         ctrl.items.splice(removedItem, 1);
+  //         ctrl.cartList.splice(i, 1);
+  //         console.log("working");
+  // }
 
     console.log(ctrl.cartList);
 
@@ -43,7 +43,7 @@ function CartListController(CartService) {
               <td> {{item.product}} </td>
               <td> {{item.price}} </td>
               <td> {{item.quantity}} </td>
-              <td> <button class="remove" ng-click="removeItem(item)"> x </button> </td>
+              <td> <button class="remove" ng-click="service.removeItem(item)"> x </button> </td>
           </tr>
         </tbody>
     </table>
