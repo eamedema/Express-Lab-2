@@ -11,23 +11,33 @@ const cartItems = express.Router();
 
 // accept GET request at URI: /cartItems
 cartItems.get('/', (req, res) => {
-    console.log('test');
-    console.log(req.body);
-res.send(cartData);
+    pool.query("SELECT * FROM ShoppingCart;")
+    .then ( (results) => {
+        res.send(results.rows);
+    })
 });
+
 // accept POST request at URI: /cartItems
 cartItems.post('/cart-items', (req, res) => {
-    console.log(req.body); // <-- this is the data that has been extracted from the request
-res.send(cartData);
+    let data = req.body;
+    pool.query("INSERT INTO ShoppingCart (product, price, quantity, image) values($1::text, $2::float, $3::int, $4::text)",[data.product, data.price, data.quantity, data.image])
+    .then( () => {
+        res.send(data.body);
+    })
 });
+
 // accept PUT request at URI: /cartItems
-cartItems.put('/cart-items/:id', (req, res) => {
-    console.log(req.params.id);
-    console.log(req.body); // <-- this is the data that has been extracted from the request
-res.send('Updating cartItems..');
+cartItems.put("/:id", (req, res) => {
+    pool.query("UPDATE ShoppingCart SET quantity=$1::int WHERE id=$2::int", [req.body.quantity, req.body.id])
+    .then( () => {
+        res.send("Item Updated");
+    })
 });
 // accept DELETE request at URI: /cartItems
-cartItems.delete('/cart-items/:id', (req, res) => {
-    console.log(req.body); // <-- this is the data that has been extracted from the request
-res.send('Deleting cartItems..');
+cartItems.delete("/:id", (req, res) => {
+    pool.query("DELETE FROM ShoppingCart WHERE id=$1::int", [req.params.id])
+    .then( () => {
+        res.status(201);
+        res.send("Item Deleted");
+    })
 });

@@ -6,11 +6,10 @@ function CartService($http, $q) {
  
     service.addItem = (item) => {
         console.log(item);
-        service.cartList.push(item);  // This part works
+        service.cartList.push(item);
         
 
         function getSuccess (res) { 
-            // return res.data.data;
             return res.data;
           }
           
@@ -21,11 +20,31 @@ function CartService($http, $q) {
             }); 
     }
 
-    service.removeItem = (item) => {
-        let i = service.items.indexOf(item);
-            // service.items.splice(removedItem, 1);
-            service.cartList.splice(i, 1);
-            console.log("working");
+    service.removeItem = (id) => {
+        return $q(function(resolve, reject)  {
+                return $http({
+                url: `/cart-items/${id}`,
+                method: "DELETE",
+                data: id
+            }).then((response) => {
+                console.log(id);
+                return response.data;
+            })
+
+        })
+    }
+
+    service.updateCart = (item) => {
+        return $q(function(resolve, reject) {
+            return $http ({
+                url: `/cart-items/${item.itemID}`,
+                method: "PUT",
+                data: item
+            })
+            .then( (response) => {
+                return response.data;
+            })
+        })
     }
 
     service.getTable = () => {

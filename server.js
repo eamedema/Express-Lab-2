@@ -7,7 +7,7 @@ app.use(express.static("public"));
 const pg = require("pg");
 const pool = new pg.Pool({
     user: "postgres",
-    password: "",
+    password: "mo5n2key",
     host: "localhost",
     port: 5432,
     database: "ExpressShopDB",
@@ -15,40 +15,32 @@ const pool = new pg.Pool({
 });
 
 app.post("/cart-items", (req, res) => {
-    let data = req.body[0];
-    let id = data.id;
-    console.log(data);
-
-    pool.query(
-        "INSERT INTO shoppingcart (id, product, price, quantity) values($1::int, $2::text, $3::int, $4::int)", 
-        [data.id, data.product, data.price, data.quantity]
-    )
-    .then( () => {
-        res.status(201); // Created
-        res.send('Successfully added item!');
-    })
-  });
-
-app.put("/cart-items/:id", (req, res) => {
-    let id = req.params.id;
     let data = req.body;
-
-    // req.params, req.body, req.query
-    let name = data.name;
+    pool.query("INSERT INTO ShoppingCart (product, price, quantity, image) values($1::text, $2::float, $3::int, $4::text)",[data.product, data.price, data.quantity, data.image])
+    .then( () => {
+        res.send(data.body);
+    })
 });
 
-app.get("/cart-items", (req, res) => {
-    pool.query("SELECT * FROM shoppingcart;")
-    .then( (result) => {
-        res.send(result.rows);
-    })
-  });
-
-app.delete('/cart-items/:id', (req, res) => {
-    pool.query("DELETE FROM shoppingcart WHERE id = $1::int", [req.params.id])
+app.put("/cart-items/:id", (req, res) => {
+    pool.query("UPDATE ShoppingCart SET quantity=$1::int WHERE id=$2::int", [req.body.quantity, req.body.id])
     .then( () => {
-        res.status(202);
-        res.send("Successfully deleted item");
+        res.send("Item Updated");
+    })
+});;
+
+app.get("/cart-items", (req, res) => {
+    pool.query("SELECT * FROM ShoppingCart;")
+    .then ( (results) => {
+        res.send(results.rows);
+    })
+});
+
+app.delete('/cart-items/:id', (req, res) =>{
+    pool.query("DELETE FROM ShoppingCart WHERE id=$1::int", [req.params.id])
+    .then( () => {
+        res.status(201);
+        res.send("Item Deleted");
     })
 });
 
